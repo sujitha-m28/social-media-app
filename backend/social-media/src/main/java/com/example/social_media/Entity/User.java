@@ -1,7 +1,10 @@
 package com.example.social_media.Entity;
-import io.micrometer.common.util.internal.logging.InternalLogger;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -25,5 +28,11 @@ public class User {
     private String bio;
 
     private String profileImage;
+    @JsonIgnore
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL)
+    private List<Follow> following = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "following", cascade = CascadeType.ALL)
+    private List<Follow> followers = new ArrayList<>();
 
 }
